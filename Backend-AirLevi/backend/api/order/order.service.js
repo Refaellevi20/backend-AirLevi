@@ -17,8 +17,8 @@ async function query(filterBy = {}) {
             {
                 $match: {
                     $or: [
-                       { "buyerId": ObjectId(loggedinUser._id) },
-                       { "hostId": ObjectId(loggedinUser._id) }
+                       { "buyerId":new  ObjectId(loggedinUser._id) },
+                       { "hostId":new  ObjectId(loggedinUser._id) }
                     ]
                  }
              },
@@ -70,9 +70,9 @@ async function add(order) {
     console.log(order.stayId, 'order.stayId')
     try {
         const orderToAdd = {
-            buyerId: ObjectId(order.buyerId),
-            stayId: ObjectId(order.stayId),
-            hostId: ObjectId(order.hostId),
+            buyerId:new  ObjectId(order.buyerId),
+            stayId:new  ObjectId(order.stayId),
+            hostId:new  ObjectId(order.hostId),
             totalPrice: order.totalPrice,
             startDate: order.startDate,
             endDate: order.endDate,
@@ -92,9 +92,9 @@ async function add(order) {
 async function update(order) {
     try {
         const orderToAdd = {
-            buyerId: ObjectId(order.buyer._id),
-            stayId: ObjectId(order.stay._id),
-            hostId: ObjectId(order.hostId),
+            buyerId:new  ObjectId(order.buyer._id),
+            stayId:new  ObjectId(order.stay._id),
+            hostId:new  ObjectId(order.hostId),
             totalPrice: order.totalPrice,
             startDate: order.startDate,
             endDate: order.endDate,
@@ -116,7 +116,7 @@ async function remove(orderId) {
         const store = asyncLocalStorage.getStore()
         const { loggedinUser } = store
         const collection = await dbService.getCollection('order')
-        const criteria = { _id: ObjectId(orderId) }
+        const criteria = { _id:new  ObjectId(orderId) }
 
         // remove only if user is admin or the review's owner
         if (!loggedinUser.isAdmin) criteria.hostId = ObjectId(loggedinUser._id)
