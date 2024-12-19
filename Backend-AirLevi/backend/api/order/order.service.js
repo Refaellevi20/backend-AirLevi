@@ -4,24 +4,23 @@ const utilService = require('../../services/util.service')
 const ObjectId = require('mongodb').ObjectId
 const asyncLocalStorage = require('../../services/als.service')
 
-
 async function query(filterBy = {}) {
     const store = asyncLocalStorage.getStore()
     const { loggedinUser } = store
     try {
         const criteria = _buildCriteria(filterBy)
-        const collection = await dbService.getCollection('order')
+        const collection = await dbService.getCollection('orders')
         // var orders = await collection.find(criteria).toArray()
         console.log(loggedinUser._id, 'loggedinUser._id')
         var orders = await collection.aggregate([
             {
                 $match: {
                     $or: [
-                       { "buyerId":new  ObjectId(loggedinUser._id) },
-                       { "hostId":new  ObjectId(loggedinUser._id) }
+                        { "buyerId": new ObjectId(loggedinUser._id) },
+                        { "hostId": new ObjectId(loggedinUser._id) }
                     ]
-                 }
-             },
+                }
+            },
             {
                 $match: criteria
             },
@@ -53,7 +52,7 @@ async function query(filterBy = {}) {
         console.log(orders)
         orders = orders.map(order => {
             order.buyer = { _id: order.buyer._id, fullname: order.buyer.fullname, imgUrl: order.buyer.imgUrl }
-            order.createdAt=order._id.getTimestamp()
+            order.createdAt = order._id.getTimestamp()
             delete order.buyerId
             delete order.stayId
             return order
@@ -70,9 +69,9 @@ async function add(order) {
     console.log(order.stayId, 'order.stayId')
     try {
         const orderToAdd = {
-            buyerId:new  ObjectId(order.buyerId),
-            stayId:new  ObjectId(order.stayId),
-            hostId:new  ObjectId(order.hostId),
+            buyerId: new ObjectId(order.buyerId),
+            stayId: new ObjectId(order.stayId),
+            hostId: new ObjectId(order.hostId),
             totalPrice: order.totalPrice,
             startDate: order.startDate,
             endDate: order.endDate,
@@ -80,8 +79,10 @@ async function add(order) {
             msgs: order.msgs,
             status: order.status
         }
-        const collection = await dbService.getCollection('order')
+        const collection = await dbService.getCollection('orders')
         await collection.insertOne(orderToAdd)
+        console.log('buyerId:', order.buyerId, 'stayId:', order.stayId);
+
         return orderToAdd
     } catch (err) {
         logger.error('cannot insert order', err)
@@ -92,9 +93,9 @@ async function add(order) {
 async function update(order) {
     try {
         const orderToAdd = {
-            buyerId:new  ObjectId(order.buyer._id),
-            stayId:new  ObjectId(order.stay._id),
-            hostId:new  ObjectId(order.hostId),
+            buyerId: new ObjectId(order.buyer._id),
+            stayId: new ObjectId(order.stay._id),
+            hostId: new ObjectId(order.hostId),
             totalPrice: order.totalPrice,
             startDate: order.startDate,
             endDate: order.endDate,
@@ -102,8 +103,8 @@ async function update(order) {
             msgs: order.msgs,
             status: order.status
         }
-        const collection = await dbService.getCollection('order')
-        await collection.updateOne({ _id: ObjectId(order._id) }, { $set: orderToAdd })
+        const collection = await dbService.getCollection('orders')
+        await collection.updateOne({ _id: new ObjectId(order._id) }, { $set: orderToAdd })
         return orderToAdd
     } catch {
         logger.error(`cannot update order ${order._id}`, err)
@@ -115,13 +116,13 @@ async function remove(orderId) {
     try {
         const store = asyncLocalStorage.getStore()
         const { loggedinUser } = store
-        const collection = await dbService.getCollection('order')
-        const criteria = { _id:new  ObjectId(orderId) }
+        const collection = await dbService.getCollection('orders')
+        const criteria = { _id: new ObjectId(orderId) }
 
         // remove only if user is admin or the review's owner
         if (!loggedinUser.isAdmin) criteria.hostId = ObjectId(loggedinUser._id)
 
-        const {deletedCount} = await collection.deleteOne(criteria)      
+        const { deletedCount } = await collection.deleteOne(criteria)
         return deletedCount
     } catch (err) {
         logger.error(`cannot remove order ${orderId}`, err)
@@ -133,9 +134,9 @@ async function addOrderMsg(orderId, msg) {
     try {
         msg.id = utilService.makeId()
         msg.createdAt = Date.now()
-        delete(msg.to)
-        const collection = await dbService.getCollection('order')
-        await collection.updateOne({ _id: ObjectId(orderId) }, { $push: { msgs: msg } })
+        delete (msg.to)
+        const collection = await dbService.getCollection('orders')
+        await collection.updateOne({ _id: new ObjectId(orderId) }, { $push: { msgs: msg } })
         return msg
     } catch (err) {
         logger.error(`cannot add order message ${orderId}`, err)
@@ -144,10 +145,10 @@ async function addOrderMsg(orderId, msg) {
 }
 
 
-async function removeOrderMsg(orderId, msgId){
+async function removeOrderMsg(orderId, msgId) {
     try {
-        const collection = await dbService.getCollection('order')
-        await collection.updateOne({ _id: ObjectId(orderId) }, { $pull: { msgs: { id: msgId } } })
+        const collection = await dbService.getCollection('orders')
+        await collection.updateOne({ _id: new ObjectId(orderId) }, { $pull: { msgs: { id: msgId } } })
         return msgId
     } catch (err) {
         logger.error(`cannot remove order message ${orderId}`, err)
@@ -157,8 +158,8 @@ async function removeOrderMsg(orderId, msgId){
 
 async function getById(orderId) {
     try {
-        const collection = await dbService.getCollection('order')
-        const order = await collection.findOne({ '_id': ObjectId(orderId) })
+        const collection = await dbService.getCollection('orders')
+        const order = await collection.findOne({ '_id': new ObjectId(orderId) })
         return order
     } catch (err) {
         logger.error(`while finding order ${orderId}`, err)
