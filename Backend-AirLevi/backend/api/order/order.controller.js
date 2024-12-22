@@ -51,7 +51,7 @@ async function updateOrder(req, res) {
     const { loggedinUser } = store
     try {
         const order = req.body
-        // console.log(order, 'order')
+        console.log(order, 'order')
         const updatedOrder = await orderService.update(order)
         console.log(updatedOrder.buyerId, 'updatedOrder')
 

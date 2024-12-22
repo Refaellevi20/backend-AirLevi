@@ -1,7 +1,7 @@
 const dbService = require('../../services/db.service')
 const logger = require('../../services/logger.service')
 const utilService = require('../../services/util.service')
-const ObjectId = require('mongodb').ObjectId
+const  ObjectId = require('mongodb').ObjectId
 const asyncLocalStorage = require('../../services/als.service')
 
 async function query(filterBy = {}) {
@@ -9,9 +9,26 @@ async function query(filterBy = {}) {
     const { loggedinUser } = store
     try {
         const criteria = _buildCriteria(filterBy)
-        const collection = await dbService.getCollection('orders')
-        // var orders = await collection.find(criteria).toArray()
         console.log(loggedinUser._id, 'loggedinUser._id')
+        console.log('Criteria:', criteria)
+
+        // const buyers = await dbService.getCollection('user').find({ _id: new ObjectId(loggedinUser._id) }).toArray();
+        // console.log('Buyers:', buyers);
+        
+        // const stays = await dbService.getCollection('stay').find({ _id: new ObjectId('676334c7bb16c66df3f13fe3') }).toArray();
+        // console.log('Stays:', stays)
+
+        const collection = await dbService.getCollection('orders')
+
+        // First match condition check
+        const matchResult = await collection.find({
+            $or: [
+                { "buyerId": new ObjectId(loggedinUser._id) },
+                { "hostId": new ObjectId(loggedinUser._id) }
+            ]
+        }).toArray()
+        // console.log('Match Result:', matchResult) //*v 
+
         var orders = await collection.aggregate([
             {
                 $match: {
@@ -25,8 +42,7 @@ async function query(filterBy = {}) {
                 $match: criteria
             },
             {
-                $lookup:
-                {
+                $lookup: {
                     localField: 'buyerId',
                     from: 'user',
                     foreignField: '_id',
@@ -34,11 +50,13 @@ async function query(filterBy = {}) {
                 }
             },
             {
-                $unwind: '$buyer'
+                $unwind: {
+                    path: '$buyer',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
-                $lookup:
-                {
+                $lookup: {
                     localField: 'stayId',
                     from: 'stay',
                     foreignField: '_id',
@@ -46,17 +64,26 @@ async function query(filterBy = {}) {
                 }
             },
             {
-                $unwind: '$stay'
+                $unwind: {
+                    path: '$stay',
+                    preserveNullAndEmptyArrays: true 
+                }
             }
         ]).toArray()
-        console.log(orders)
+
+        console.log('After unwind - Orders:', orders)
+
+        // Mapping the result
         orders = orders.map(order => {
+            console.log(order, 'order before mapping')
+
             order.buyer = { _id: order.buyer._id, fullname: order.buyer.fullname, imgUrl: order.buyer.imgUrl }
             order.createdAt = order._id.getTimestamp()
             delete order.buyerId
             delete order.stayId
             return order
         })
+        
         return orders
     } catch (err) {
         logger.error('cannot find orders', err)
@@ -120,7 +147,7 @@ async function remove(orderId) {
         const criteria = { _id: new ObjectId(orderId) }
 
         // remove only if user is admin or the review's owner
-        if (!loggedinUser.isAdmin) criteria.hostId = ObjectId(loggedinUser._id)
+        if (!loggedinUser.isAdmin) criteria.hostId = new ObjectId(loggedinUser._id)
 
         const { deletedCount } = await collection.deleteOne(criteria)
         return deletedCount
@@ -130,31 +157,6 @@ async function remove(orderId) {
     }
 }
 
-async function addOrderMsg(orderId, msg) {
-    try {
-        msg.id = utilService.makeId()
-        msg.createdAt = Date.now()
-        delete (msg.to)
-        const collection = await dbService.getCollection('orders')
-        await collection.updateOne({ _id: new ObjectId(orderId) }, { $push: { msgs: msg } })
-        return msg
-    } catch (err) {
-        logger.error(`cannot add order message ${orderId}`, err)
-        throw err
-    }
-}
-
-
-async function removeOrderMsg(orderId, msgId) {
-    try {
-        const collection = await dbService.getCollection('orders')
-        await collection.updateOne({ _id: new ObjectId(orderId) }, { $pull: { msgs: { id: msgId } } })
-        return msgId
-    } catch (err) {
-        logger.error(`cannot remove order message ${orderId}`, err)
-        throw err
-    }
-}
 
 async function getById(orderId) {
     try {
@@ -170,8 +172,9 @@ async function getById(orderId) {
 
 function _buildCriteria(filterBy) {
     const criteria = {}
-    // if (filterBy.stayId) criteria.stayId = filterBy.stayId
-    // if (filterBy.orderId) criteria._id = ObjectId(filterBy.orderId)
+    // if (filterBy.status) criteria.status = filterBy.status
+    // if (filterBy.startDate) criteria.startDate = { $gte: new Date(filterBy.startDate) }
+    // if (filterBy.endDate) criteria.endDate = { $lte: new Date(filterBy.endDate) }
     return criteria
 }
 
@@ -182,7 +185,34 @@ module.exports = {
     add,
     update,
     remove,
-    addOrderMsg,
-    removeOrderMsg,
+
     getById
 }
+
+// addOrderMsg,
+// removeOrderMsg,
+// async function addOrderMsg(orderId, msg) {
+//     try {
+//         msg.id = utilService.makeId()
+//         msg.createdAt = Date.now()
+//         delete (msg.to)
+//         const collection = await dbService.getCollection('orders')
+//         await collection.updateOne({ _id: new ObjectId(orderId) }, { $push: { msgs: msg } })
+//         return msg
+//     } catch (err) {
+//         logger.error(`cannot add order message ${orderId}`, err)
+//         throw err
+//     }
+// }
+
+
+// async function removeOrderMsg(orderId, msgId) {
+//     try {
+//         const collection = await dbService.getCollection('orders')
+//         await collection.updateOne({ _id: new ObjectId(orderId) }, { $pull: { msgs: { id: msgId } } })
+//         return msgId
+//     } catch (err) {
+//         logger.error(`cannot remove order message ${orderId}`, err)
+//         throw err
+//     }
+// }
