@@ -3,14 +3,15 @@ const logger = require('../../services/logger.service')
 const utilService = require('../../services/util.service')
 const  ObjectId = require('mongodb').ObjectId
 const asyncLocalStorage = require('../../services/als.service')
+// const { emitToUser } = require('../../services/socket.service')
 
 async function query(filterBy = {}) {
     const store = asyncLocalStorage.getStore()
     const { loggedinUser } = store
     try {
         const criteria = _buildCriteria(filterBy)
-        console.log(loggedinUser._id, 'loggedinUser._id')
-        console.log('Criteria:', criteria)
+        // console.log(loggedinUser._id, 'loggedinUser._id')
+        // console.log('Criteria:', criteria)
 
         // const buyers = await dbService.getCollection('user').find({ _id: new ObjectId(loggedinUser._id) }).toArray();
         // console.log('Buyers:', buyers);
@@ -71,11 +72,11 @@ async function query(filterBy = {}) {
             }
         ]).toArray()
 
-        console.log('After unwind - Orders:', orders)
+        // console.log('After unwind - Orders:', orders)
 
         // Mapping the result
         orders = orders.map(order => {
-            console.log(order, 'order before mapping')
+            // console.log(order, 'order before mapping')
 
             order.buyer = { _id: order.buyer._id, fullname: order.buyer.fullname, imgUrl: order.buyer.imgUrl }
             order.createdAt = order._id.getTimestamp()
@@ -119,9 +120,17 @@ async function add(order) {
 
 async function update(order) {
     try {
+        // console.log('Order object before validation:', order)
+
+        // Validation check for missing fields (make stay optional)
+        if (!order || !order._id || !order.hostId || !order.buyer || !order.buyer._id || 
+            (order.stay && !order.stay._id)) {
+            throw new Error('Invalid order object or missing required fields')
+        }
+
         const orderToAdd = {
             buyerId: new ObjectId(order.buyer._id),
-            stayId: new ObjectId(order.stay._id),
+            stayId: order.stay ? new ObjectId(order.stay._id) : null, // Only include stay if present
             hostId: new ObjectId(order.hostId),
             totalPrice: order.totalPrice,
             startDate: order.startDate,
@@ -130,11 +139,28 @@ async function update(order) {
             msgs: order.msgs,
             status: order.status
         }
+
         const collection = await dbService.getCollection('orders')
         await collection.updateOne({ _id: new ObjectId(order._id) }, { $set: orderToAdd })
+
+        // Emit the updated order to the relevant clients (buyer and host)
+        emitToUser({ 
+            type: 'order-updated', 
+            data: orderToAdd, 
+            userId: order.buyer._id 
+        })
+
+        if (order.hostId !== order.buyer._id) {
+            emitToUser({ 
+                type: 'order-updated', 
+                data: orderToAdd, 
+                userId: order.hostId 
+            })
+        }
+
         return orderToAdd
-    } catch {
-        logger.error(`cannot update order ${order._id}`, err)
+    } catch (err) {
+        logger.error(`Cannot update order ${order?._id}`, err)
         throw err
     }
 }
