@@ -7,7 +7,7 @@ const ObjectId = require('mongodb').ObjectId
 async function query(filterBy) {
     try {
         const criteria = _buildCriteria(filterBy)
-        console.log('Query Criteria:', criteria)
+        // console.log('Query Criteria:', criteria)
 
         const collection = await dbService.getCollection('AirLevi')
         if (!collection) {
@@ -16,7 +16,7 @@ async function query(filterBy) {
         }
 
         const stays = await collection.find(criteria).toArray()
-        console.log('Stays:', stays)
+        // console.log('Stays:', stays)
         return stays
     } catch (err) {
         logger.error('Error while querying stays:', err)
@@ -63,7 +63,7 @@ async function update(stay) {
             ...stay,
         }
 
-        console.log(stayToSave)
+        // console.log(stayToSave)
         const collection = await dbService.getCollection('AirLevi')
         await collection.updateOne({ _id: ObjectId(stay._id) }, { $set: stayToSave })
         return stay
@@ -127,12 +127,12 @@ function _buildCriteria(filterBy) {
     const criteria = {}
 
     if (filterBy.location) {
-        console.log('filterBy.location', filterBy.location)
+        // console.log('filterBy.location', filterBy.location)
         criteria.name = { $regex: filterBy.location, $options: 'i' }
     }
 
     if (filterBy.likedByUserId) {
-        console.log('filterBy.likedByUserId', filterBy.likedByUserId)
+        // console.log('filterBy.likedByUserId', filterBy.likedByUserId)
         try {
             criteria.likedByUsers = { 
                 $elemMatch: { _id: new ObjectId(filterBy.likedByUserId) } 

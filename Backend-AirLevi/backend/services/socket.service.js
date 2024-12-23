@@ -36,16 +36,23 @@ function setupSocketAPI(http) {
             socket.broadcast.to(socket.myTopic).emit('user-is-typing', username)
         })
 
-
         socket.on('user-watch', userId => {
             logger.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
             socket.join('watching:' + userId)
             
         })
 
+        socket.on('chat-remove-msg', async ({ orderId, msgId }) => {
+            try {
+                logger.info(`Removing message ${msgId} from order ${orderId}`)
+                gIo.to(socket.myTopic).emit('chat-remove-msg', { msgId })
+            } catch (err) {
+                logger.error('Error in socket chat-remove-msg:', err)
+            }
+        })
 
-        //LOGIN-LOGOUT
-        socket.on('set-user-socket', userId => {
+
+       socket.on('set-user-socket', userId => {
             logger.info(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
             socket.userId = userId
         })

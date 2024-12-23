@@ -91,6 +91,22 @@ async function deleteOrder(req, res) {
     }
 }
 
+async function removeOrderMsg(req, res) {
+    try {
+        const { id: orderId, msgId } = req.params
+        
+        if (!orderId || !msgId) {
+            return res.status(400).send({ error: 'Missing orderId or msgId' })
+        }
+
+        const order = await orderService.removeMsg(orderId, msgId)
+        res.json(order)
+    } catch (err) {
+        console.error('Failed to remove message:', err)
+        res.status(500).send({ error: 'Failed to remove message', details: err.message })
+    }
+}
+
 async function addOrderMsg(req, res) {
     const store = asyncLocalStorage.getStore()
     const { loggedinUser } = store
@@ -109,20 +125,20 @@ async function addOrderMsg(req, res) {
     }
 }
 
-async function removeOrderMsg(req, res) {
-    try {
-        const orderId = req.params.id
-        const { msgId } = req.params
+// async function removeOrderMsg(req, res) {
+//     try {
+//         const orderId = req.params.id
+//         const { msgId } = req.params
 
 
-        const removedMsgId = await orderService.removeOrderMsg(orderId, msgId)
-        console.log(removedMsgId, 'removedMsgId')
-        res.send(removedMsgId)
-    } catch (err) {
-        logger.error('Failed to remove order msg', err)
-        res.status(500).send({ err: 'Failed to remove order msg' })
-    }
-}
+//         const removedMsgId = await orderService.removeOrderMsg(orderId, msgId)
+//         console.log(removedMsgId, 'removedMsgId')
+//         res.send(removedMsgId)
+//     } catch (err) {
+//         logger.error('Failed to remove order msg', err)
+//         res.status(500).send({ err: 'Failed to remove order msg' })
+//     }
+// }
 
 
 module.exports = {
