@@ -70,16 +70,13 @@ app.use('/api/order', orderRoutes)
 app.use('/api/stay', stayRoutes)
 setupSocketAPI(http)
 
-// Make every server-side-route to match the index.html
-// so when requesting http://localhost:3030/index.html/stay/123 it will still respond with
-// our SPA (single page app) (the index.html file) and allow vue/react-router to take it from there
 app.get('/**', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 
 const logger = require('./services/logger.service')
-const port = process.env.PORT || 3036
+const port = process.env.PORT || 3030
 http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
 })
