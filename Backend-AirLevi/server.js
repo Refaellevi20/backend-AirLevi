@@ -59,3 +59,11 @@ const PORT = process.env.PORT || 3030
 server.listen(PORT, () => {
     logger.info(`Server running at http://localhost:${PORT}`)
 })
+
+// "scripts": {
+//     "start": "node server.js",
+//     "dev": "nodemon server.js",
+//     "server:dev": "nodemon server.js",
+//     "server:prod": "set NODE_ENV=production&&node server.js",
+//     "server:prod:win": "set NODE_ENV=production&&node server.js"
+// },
