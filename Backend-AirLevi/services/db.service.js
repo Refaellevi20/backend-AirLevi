@@ -29,19 +29,20 @@ async function getCollection(collectionName) {
 async function connect() {
     if (dbConn) return dbConn
     try {
-        console.log('config',config)
-        console.log('Attempting to connect to the database...')
-        const client = await MongoClient.connect(config.dbURL)
+        console.log('config:', config)
+        console.log('Attempting to connect to MongoDB...')
+        const client = await MongoClient.connect(config.dbURL);
+
         const db = client.db(config.dbName)
         dbConn = db
-        console.log('Connected to the database')
+        console.log('Successfully connected to MongoDB.')
         return db
     } catch (err) {
-        logger.error('Cannot Connect to DB', err)
+        console.error('Connection error details:', err.message)
+        logger.error('Cannot connect to DB', err)
         throw err
     }
 }
-
 
 
 

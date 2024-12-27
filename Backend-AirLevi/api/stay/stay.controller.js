@@ -6,6 +6,8 @@ const logger = require('../../services/logger.service');
 
 async function getStays(req, res) {
     const filterBy = req.query
+    console.log('filterBy',filterBy)
+    
     try {
         // logger.debug('Getting Stays')
         // console.log('filterBy', filterBy)
@@ -36,10 +38,6 @@ async function addStay(req, res) {
         stay.host = loggedinUser
         const addedStay = await stayService.add(stay)
 
-        // if (loggedinUser._id && !loggedinUser.isOwner) {
-        //     loggedinUser.isOwner = true
-        //     await userService.update(loggedinUser)
-        // }
         res.json(addedStay)
     } catch (err) {
         logger.error('Failed to add stay', err)
@@ -120,8 +118,6 @@ async function removeStayLike(req, res) {
         res.status(500).send({ err: 'Failed to remove stay like' })
     }
 }
-
-
 
 module.exports = {
     getStays,
