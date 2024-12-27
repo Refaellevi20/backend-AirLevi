@@ -14,7 +14,7 @@ app.use(cookieParser())
 app.use(express.json())
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.resolve(__dirname, 'public')))
+    app.use(express.static(path.join(__dirname, 'public')))
 } else {
     const corsOptions = {
         origin: [
