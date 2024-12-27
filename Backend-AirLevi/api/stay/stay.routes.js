@@ -17,7 +17,7 @@ router.delete('/:id', requireAuth, removeStay)
 router.post('/:id/review', requireAuth, addStayReview)
 router.delete('/:id/review/:reviewId', requireAuth, removeStayReview)
 
-router.post('/:id/like', requireAuth, addStayLike)
-router.delete('/:id/like', requireAuth, removeStayLike)
+// router.post('/:id/like', requireAuth, addStayLike)
+// router.delete('/:id/like', requireAuth, removeStayLike)
 
 module.exports = router

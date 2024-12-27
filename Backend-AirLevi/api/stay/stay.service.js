@@ -20,9 +20,19 @@ async function query(filterBy) {
         return stays
     } catch (err) {
         logger.error('Error while querying stays:', err)
-        throw err
-    }
+        throw new Error(`Query failed: ${err.message}`)
+        }
 }
+
+const testConnection = async () => {
+    try {
+        const collection = await dbService.getCollection('AirLevi');
+        console.log('MongoDB connection is successful');
+    } catch (err) {
+        console.error('MongoDB connection error:', err);
+    }
+};
+testConnection()
 
 async function getById(stayId) {
     try {
@@ -59,19 +69,31 @@ async function add(stay) {
 
 async function update(stay) {
     try {
-        const stayToSave = {
-            ...stay,
-        }
-
-        // console.log(stayToSave)
-        const collection = await dbService.getCollection('AirLevi')
-        await collection.updateOne({ _id: ObjectId(stay._id) }, { $set: stayToSave })
-        return stay
-    } catch (err) {
-        logger.error(`cannot update stay ${stay._id}`, err)
-        throw err
+        const savedStay = await stayService.save(stay)
+        console.log('Updated stay action store:', savedStay)
+        store.dispatch(getActionUpdateStay(savedStay))
+        return savedStay
+      } catch (err) {
+        console.log('Error while updating stay', err)
+        logger.error(`Error while updating stay ${stay._id}:`, err)
+        throw new Error(`Cannot save stay: ${err.message}`)
+      }
     }
-}
+// async function update(stay) {
+//     try {
+//         const stayToSave = {
+//             ...stay,
+//         }
+
+//         // console.log(stayToSave)
+//         const collection = await dbService.getCollection('AirLevi')
+//         await collection.updateOne({ _id: ObjectId(stay._id) }, { $set: stayToSave })
+//         return stay
+//     } catch (err) {
+//         logger.error(`cannot update stay ${stay._id}`, err)
+//         throw err
+//     }
+// }
 
 async function addStayReview(stayId, review) {
     try {
