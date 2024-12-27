@@ -122,7 +122,6 @@ async function removeStayLike(stayId) {
     }
 }
 
-
 function _buildCriteria(filterBy) {
     const criteria = {}
 
