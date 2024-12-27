@@ -6,7 +6,7 @@ const axios = require('axios')
 require('dotenv').config()
 
 const app = express()
-const http = require('http').createServer(app)
+const server = require('http').createServer(app)
 
 // Express App Config
 app.use(express.static('public'))
@@ -18,6 +18,8 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     const corsOptions = {
         origin: [
+            'http://127.0.0.1:3000',
+             'http://localhost:3000',
             'http://127.0.0.1:8080',
             'http://localhost:8080',
             'http://127.0.0.1:5173',
@@ -44,7 +46,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/stay', stayRoutes)
-setupSocketAPI(http)
+setupSocketAPI(server)
 
 app.get('/**', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
@@ -53,7 +55,7 @@ app.get('/**', (req, res) => {
 
 const logger = require('./services/logger.service')
 const PORT = process.env.PORT || 3030
-http.listen(PORT, () => {
+server.listen(PORT, () => {
     logger.info(`Server running at http://localhost:${PORT}`)
 })
 
