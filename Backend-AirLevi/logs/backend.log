@@ -1,0 +1,33 @@
+27.12.2024, 6:47:59 - INFO - Server running at http://localhost:3030 
+27.12.2024, 6:48:03 - INFO - New connected socket [id: mPmGyg7VhBUsGibNAAAB] 
+27.12.2024, 6:48:03 - INFO - New connected socket [id: xoI3c2W9sYi3d2ORAAAE] 
+27.12.2024, 6:48:04 - INFO - New connected socket [id: dpqPuIDKNmrhn_7AAAAF] 
+27.12.2024, 6:48:04 - INFO - New connected socket [id: suyziKAVRSli5M-pAAAH] 
+27.12.2024, 6:48:07 - INFO - New connected socket [id: HN8hKxbEdABGOt0cAAAJ] 
+27.12.2024, 6:48:13 - DEBUG - auth.service - login with username: host (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:48:14 - INFO - User login:  | {"_id":"67635017bb16c66df3f141fa","fullname":"shukiy Host","imgUrl":"https://robohash.org/shukiyhost","username":"host","isOwner":true,"likedStays":"[ObjectId{ _id: '622f337a75c7d36e498aaaf8' }]"} (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:48:14 - INFO - Setting socket.userId = 67635017bb16c66df3f141fa for socket [id: HN8hKxbEdABGOt0cAAAJ] 
+27.12.2024, 6:48:14 - DEBUG - auth.service - login with username: host (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:48:14 - INFO - User login:  | {"_id":"67635017bb16c66df3f141fa","fullname":"shukiy Host","imgUrl":"https://robohash.org/shukiyhost","username":"host","isOwner":true,"likedStays":"[ObjectId{ _id: '622f337a75c7d36e498aaaf8' }]"} (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:48:14 - INFO - Setting socket.userId = 67635017bb16c66df3f141fa for socket [id: HN8hKxbEdABGOt0cAAAJ] 
+27.12.2024, 6:48:18 - INFO - No active socket for user: 622f3402e36c59e6164fad59 (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:48:41 - ERROR - Cannot update order 676e3192e4a71a1b8033f232 | ReferenceError: emitToUser is not defined (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:48:41 - ERROR - Failed to update order | ReferenceError: emitToUser is not defined (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 6:49:50 - INFO - New chat msg from socket [id: HN8hKxbEdABGOt0cAAAJ], emitting to topic 67636bdbfff15d593e46e72e 
+27.12.2024, 6:49:55 - INFO - Socket is leaving topic 67636bdbfff15d593e46e72e [id: HN8hKxbEdABGOt0cAAAJ] 
+27.12.2024, 6:51:12 - INFO - Removing socket.userId for socket [id: HN8hKxbEdABGOt0cAAAJ] 
+27.12.2024, 6:51:40 - DEBUG - auth.service - login with username: host 
+27.12.2024, 6:51:40 - INFO - User login:  | {"_id":"67635017bb16c66df3f141fa","fullname":"shukiy Host","imgUrl":"https://robohash.org/shukiyhost","username":"host","isOwner":true,"likedStays":"[ObjectId{ _id: '622f337a75c7d36e498aaaf8' }]"} 
+27.12.2024, 6:51:40 - INFO - Setting socket.userId = 67635017bb16c66df3f141fa for socket [id: HN8hKxbEdABGOt0cAAAJ] 
+27.12.2024, 6:54:23 - INFO - Server running at http://localhost:3030 
+27.12.2024, 6:54:23 - INFO - New connected socket [id: H6jOsnL-MuRg69EjAAAC] 
+27.12.2024, 6:54:23 - INFO - New connected socket [id: PPAtGEbK-qHmmmmPAAAD] 
+27.12.2024, 6:54:23 - INFO - New connected socket [id: cqttDUBC0-p1otWRAAAF] 
+27.12.2024, 6:54:24 - INFO - New connected socket [id: 4jrPAR_MS8Q1NpdqAAAI] 
+27.12.2024, 6:54:24 - INFO - New connected socket [id: MXgoPolytwlm6gv9AAAJ] 
+27.12.2024, 7:16:38 - INFO - Server running at http://localhost:3030 
+27.12.2024, 7:16:38 - INFO - New connected socket [id: RneoapZ1RDt1_GYcAAAD] 
+27.12.2024, 7:16:38 - INFO - New connected socket [id: nIjZ2vWStiISySO_AAAE] 
+27.12.2024, 7:16:38 - INFO - New connected socket [id: 3dVWz99AWP5VMRUtAAAF] 
+27.12.2024, 7:16:39 - INFO - New connected socket [id: sPMEkgZ39GVs_kGQAAAI] 
+27.12.2024, 7:16:39 - INFO - New connected socket [id: PxnRPz4WUP-PZPZrAAAJ] 
