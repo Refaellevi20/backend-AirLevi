@@ -43,5 +43,18 @@ async function connect() {
 }
 
 
+const dbURL = process.env.MONGO_DB_URL
+if (dbURL && dbURL.startsWith('mongodb')) {
+    MongoClient.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(client => {
+            // Connection successful
+        })
+        .catch(error => {
+            console.error('MongoDB connection failed:', error);
+        });
+} else {
+    console.error('Invalid MongoDB connection string');
+}
 
+console.log('MongoDB URL from environment:', process.env.MONGO_DB_URL);
 
