@@ -6,7 +6,7 @@ const ObjectId = require('mongodb').ObjectId
 
 async function query(filterBy) {
     try {
-        const criteria = _buildCriteria(filterBy)
+        // const criteria = _buildCriteria(filterBy)
         // console.log('Query Criteria:', criteria)
 
         const collection = await dbService.getCollection('AirLevi')
@@ -15,7 +15,7 @@ async function query(filterBy) {
             throw new Error('Collection "AirLevi" does not exist.')
         }
 
-        const stays = await collection.find(criteria).toArray()
+        const stays = await collection.find().toArray()
         // console.log('Stays:', stays)
         return stays
     } catch (err) {
