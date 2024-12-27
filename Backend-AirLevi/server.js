@@ -9,9 +9,9 @@ const app = express()
 const server = require('http').createServer(app)
 
 // Express App Config
+app.use(express.static('public'))
 app.use(cookieParser())
 app.use(express.json())
-app.use(express.static('public'))
 
 
 
@@ -30,7 +30,6 @@ if (process.env.NODE_ENV === 'production') {
     }
     app.use(cors(corsOptions))
 }
-
 
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
