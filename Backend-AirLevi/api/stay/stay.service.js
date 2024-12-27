@@ -130,17 +130,17 @@ function _buildCriteria(filterBy) {
         criteria.name = { $regex: filterBy.location, $options: 'i' }
     }
 
-    if (filterBy.likedByUserId) {
+    // if (filterBy.likedByUserId) {
         // console.log('filterBy.likedByUserId', filterBy.likedByUserId)
-        try {
-            criteria.likedByUsers = { 
-                $elemMatch: { _id: new ObjectId(filterBy.likedByUserId) } 
-            }
-        } catch (err) {
-            logger.error('Invalid ObjectId for likedByUserId:', filterBy.likedByUserId)
-            throw new Error('Invalid ObjectId for likedByUserId')
-        }
-    }
+    //     try {
+    //         criteria.likedByUsers = { 
+    //             $elemMatch: { _id: new ObjectId(filterBy.likedByUserId) } 
+    //         }
+    //     } catch (err) {
+    //         logger.error('Invalid ObjectId for likedByUserId:', filterBy.likedByUserId)
+    //         throw new Error('Invalid ObjectId for likedByUserId')
+    //     }
+    // }
 
     return criteria
 }
