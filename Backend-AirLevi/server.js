@@ -6,7 +6,7 @@ const axios = require('axios')
 require('dotenv').config()
 
 const app = express()
-const server = require('http').createServer(app)
+const http = require('http').createServer(app)
 
 // Express App Config
 app.use(express.static('public'))
@@ -46,7 +46,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/stay', stayRoutes)
-setupSocketAPI(server)
+setupSocketAPI(http)
 
 app.get('/**', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
@@ -55,7 +55,7 @@ app.get('/**', (req, res) => {
 
 const logger = require('./services/logger.service')
 const PORT = process.env.PORT || 3030
-server.listen(PORT, () => {
+http.listen(PORT, () => {
     logger.info(`Server running at http://localhost:${PORT}`)
 })
 

@@ -31,3 +31,20 @@
 27.12.2024, 7:16:38 - INFO - New connected socket [id: 3dVWz99AWP5VMRUtAAAF] 
 27.12.2024, 7:16:39 - INFO - New connected socket [id: sPMEkgZ39GVs_kGQAAAI] 
 27.12.2024, 7:16:39 - INFO - New connected socket [id: PxnRPz4WUP-PZPZrAAAJ] 
+27.12.2024, 7:39:14 - INFO - Server running at http://localhost:3030 
+27.12.2024, 7:39:14 - INFO - New connected socket [id: 1WoAK94We7KtcgZrAAAD] 
+27.12.2024, 7:39:14 - INFO - New connected socket [id: A6D0T7CMJJN7OdIsAAAE] 
+27.12.2024, 7:39:14 - INFO - New connected socket [id: iYFULlWK4nBIK25FAAAF] 
+27.12.2024, 7:39:18 - INFO - New connected socket [id: Hc1jD6AehbxKh93XAAAH] 
+27.12.2024, 7:39:18 - INFO - New connected socket [id: 5VxNcJ66kORI6LHnAAAK] 
+27.12.2024, 7:39:18 - INFO - New connected socket [id: dzqU9JZSei5HDaENAAAL] 
+27.12.2024, 7:39:23 - DEBUG - auth.service - login with username: host (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 7:39:23 - INFO - User login:  | {"_id":"67635017bb16c66df3f141fa","fullname":"shukiy Host","imgUrl":"https://robohash.org/shukiyhost","username":"host","isOwner":true,"likedStays":"[ObjectId{ _id: '622f337a75c7d36e498aaaf8' }]"} (userId: 67635017bb16c66df3f141fa)
+27.12.2024, 7:39:23 - INFO - Setting socket.userId = 67635017bb16c66df3f141fa for socket [id: Hc1jD6AehbxKh93XAAAH] 
+27.12.2024, 7:42:45 - INFO - Server running at http://localhost:3030 
+27.12.2024, 7:42:46 - INFO - New connected socket [id: 4h3pNXAt97SGoaPFAAAC] 
+27.12.2024, 7:42:46 - INFO - New connected socket [id: w62IMDWGBuGanXWcAAAD] 
+27.12.2024, 7:42:48 - INFO - New connected socket [id: 8Yj2EjKjHE3RX0t1AAAF] 
+27.12.2024, 7:42:49 - INFO - New connected socket [id: 427S0yCPEcEIiM2yAAAH] 
+27.12.2024, 7:42:50 - INFO - New connected socket [id: DHhoUYp4Il1OKwTuAAAK] 
+27.12.2024, 7:42:50 - INFO - New connected socket [id: Srs20UZiEU_IUdrrAAAL] 
