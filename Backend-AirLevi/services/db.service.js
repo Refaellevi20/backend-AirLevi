@@ -31,13 +31,15 @@ async function connect() {
     try {
         console.log('config',config)
         console.log('Attempting to connect to the database...')
-        // const client = await MongoClient.connect(config.dbURL)
-        // const db = client.db(config.dbName)
-        // dbConn = db
         const client = await MongoClient.connect(config.dbURL)
-        return dbConn = client.db(config.dbName)
-        // console.log('Connected to the database')
-        // return db
+        const db = client.db(config.dbName)
+        console.log('config.dbURL',config.dbURL)
+        console.log('config.name',config.dbName)
+        // console.log('clintee',client)
+        
+        //dbConn = db
+        console.log('Connected to the database')
+        return db
     } catch (err) {
         logger.error('Cannot Connect to DB', err)
         throw err
