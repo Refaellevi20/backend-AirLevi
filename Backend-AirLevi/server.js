@@ -3,21 +3,30 @@ const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
-require('dotenv').config()
+require('dotenv').config(); // Load environment variables from .env file
+const mongoose = require('mongoose');
 
+// Get MongoDB connection URL from environment variables
 const dbURL = process.env.DB_URL;
 
 if (!dbURL) {
   console.error('MongoDB URL is not defined in the environment variables.');
-  process.exit(1); // Exit the app if DB_URL is not set
+  process.exit(1); // Exit if the DB URL is not defined
 }
 
-mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect to MongoDB
+mongoose.connect(dbURL)
   .then(() => console.log('Connected to the database'))
-  .catch((err) => console.error('Failed to connect to MongoDB:', err))
+  .catch((err) => console.error('Failed to connect to MongoDB:', err));
 
-const app = express()
-const server = require('http').createServer(app)
+// Express setup
+const app = express();
+const server = require('http').createServer(app);
+
+module.exports = {
+  dbURL,
+  dbName: 'AirLevi_db',
+};
 
 // Express App Config
 app.use(express.static('public'))
