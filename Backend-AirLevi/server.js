@@ -5,6 +5,17 @@ const cookieParser = require('cookie-parser')
 const axios = require('axios')
 require('dotenv').config()
 
+const dbURL = process.env.DB_URL;
+
+if (!dbURL) {
+  console.error('MongoDB URL is not defined in the environment variables.');
+  process.exit(1); // Exit the app if DB_URL is not set
+}
+
+mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to the database'))
+  .catch((err) => console.error('Failed to connect to MongoDB:', err))
+
 const app = express()
 const server = require('http').createServer(app)
 
