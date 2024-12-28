@@ -84,9 +84,9 @@ async function query(filterBy = {}) {
             // order.buyer = order.buyer ? { _id: order.buyer._id, fullname: order.buyer.fullname, imgUrl: order.buyer.imgUrl } : { _id: null, fullname: 'Unknown Buyer', imgUrl: null }
             if (order.buyer) {
                 // console.log("Buyer before mapping:", order.buyer); // Check the buyer object
-                const { _id, fullname, imgUrl } = order.buyer || {}; // Safeguard
+                const { _id, fullname, imgUrl } = order.buyer || {} // Safeguard
                 // console.log("Destructured Buyer:", { _id, fullname, imgUrl });
-                order.buyer = { _id, fullname, imgUrl };
+                order.buyer = { _id, fullname, imgUrl }
             } else {
                 // console.log("No buyer found");
                 order.buyer = { _id: null, fullname: 'Unknown Buyer', imgUrl: null };
