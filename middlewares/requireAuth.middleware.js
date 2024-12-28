@@ -4,15 +4,15 @@ const config = require('../config')
 const asyncLocalStorage = require('../services/als.service')
 
 function requireAuth(req, res, next) {
-  // const { loggedinUser } = asyncLocalStorage.getStore()
-  const loggedinUser = authService.validateToken(req.cookies.loginToken)
-  req.loggedinUser = loggedinUser
-
+  const { loggedinUser } = asyncLocalStorage.getStore()
+  console.log('loggedinUser', loggedinUser)
   if (config.isGuestMode && !loggedinUser) {
     req.loggedinUser = { _id: '', fullname: 'Guest' }
     return next()
   }
   if (!loggedinUser) return res.status(401).send('Not Authenticated')
+  req.loggedinUser=loggedinUser
+  //IS THIS RIGHT???
   next()
 }
 
