@@ -71,21 +71,89 @@
 // //     "server:prod:win": "set NODE_ENV=production&&node server.js"
 // // },
 
+// const express = require('express')
+// const cors = require('cors')
+// const path = require('path')
+// const cookieParser = require('cookie-parser')
+// const dbService = require('./services/db.service')
+// const logger = require('./services/logger.service')
+
+// const app = express()
+// const http = require('http').createServer(app)
+
+// // Express App Config
+// app.use(cookieParser())
+// app.use(express.json())
+
+// if (process.env.NODE_ENV === 'production') {
+//     // Express serve static files on production environment
+//     app.use(express.static(path.resolve(__dirname, 'public')))
+// } else {
+//     // Configuring CORS for development
+//     const corsOptions = {
+//         origin: ['http://127.0.0.1:5173', 'http://localhost:5173'],
+//         credentials: true
+//     }
+//     app.use(cors(corsOptions))
+// }
+
+// // Routes
+// const authRoutes = require('./api/auth/auth.routes')
+// const userRoutes = require('./api/user/user.routes')
+// const orderRoutes = require('./api/order/order.routes')
+// const stayRoutes = require('./api/stay/stay.routes')
+// const { setupSocketAPI } = require('./services/socket.service')
+
+// app.use('/api/auth', authRoutes)
+// app.use('/api/user', userRoutes)
+// app.use('/api/order', orderRoutes)
+// app.use('/api/stay', stayRoutes)
+// setupSocketAPI(http)
+
+// // Make every server-side-route to match the index.html
+// // so when requesting http://localhost:3030/index.html/stay/123 it will still respond with
+// // our SPA (single page app) (the index.html file) and allow vue-router to take it from there
+// app.get('/**', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'))
+// })
+
+// const PORT = process.env.PORT || 3030
+
+// async function startServer() {
+//     try {
+//         await dbService.connect()
+//         http.listen(PORT, () => {
+//             logger.info(`Server is running on port: ${PORT}`)
+//             logger.info(`Server is running in ${process.env.NODE_ENV} mode`)
+//         })
+//     } catch (err) {
+//         logger.error('Cannot connect to DB', err)
+//         process.exit(1)
+//     }
+// }
+
+// startServer()
+
+
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+const dbService = require('./services/db.service')
+const logger = require('./services/logger.service')
 
 const app = express()
 const http = require('http').createServer(app)
 
-// Express Config:
+// Express App Config
 app.use(cookieParser())
 app.use(express.json())
 
 if (process.env.NODE_ENV === 'production') {
+    // Express serve static files on production environment
     app.use(express.static(path.resolve(__dirname, 'public')))
 } else {
+    // Configuring CORS for development
     const corsOptions = {
         origin: ['http://127.0.0.1:5173', 'http://localhost:5173'],
         credentials: true
@@ -93,46 +161,39 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions))
 }
 
+// Routes
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const orderRoutes = require('./api/order/order.routes')
-// const groupRoutes = require('./api/group/group.routes')
+const stayRoutes = require('./api/stay/stay.routes')
 const { setupSocketAPI } = require('./services/socket.service')
 
-// routes
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/order', orderRoutes)
-// app.use('/api/group', groupRoutes)
+app.use('/api/stay', stayRoutes)
 setupSocketAPI(http)
 
-// Connect to MongoDB before starting server
-const { connect } = require('./services/db.service')
-const logger = require('./services/logger.service')
-const port = process.env.PORT || 3030
+// Make every server-side-route to match the index.html
+// so when requesting http://localhost:3030/index.html/stay/123 it will still respond with
+// our SPA (single page app) (the index.html file) and allow vue-router to take it from there
+app.get('/**', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
+
+const PORT = process.env.PORT || 3030
 
 async function startServer() {
     try {
-        console.log('Attempting to connect to MongoDB...')
-        console.log('MongoDB URL:', process.env.MONGODB_URL ? 'URL exists' : 'URL is missing')
-       
-        await connect()
-        console.log('Successfully connected to MongoDB')
-       
-        http.listen(port, () => {
-            console.log('Server is running on port:', port)
+        await dbService.connect()
+        http.listen(PORT, () => {
+            logger.info(`Server is running on port: ${PORT}`)
+            logger.info(`Server is running in ${process.env.NODE_ENV} mode`)
         })
-    } catch (error) {
-        console.error('Detailed connection error:', error)
-        console.error('Error name:', error.name)
-        console.error('Error code:', error.code)
+    } catch (err) {
+        logger.error('Cannot connect to DB', err)
         process.exit(1)
     }
 }
-
-// Handle uncaught errors
-process.on('unhandledRejection', (error) => {
-    console.error('Unhandled Rejection:', error)
-})
 
 startServer()
