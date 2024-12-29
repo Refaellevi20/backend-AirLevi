@@ -1,22 +1,27 @@
 // module.exports = {
-//   dbURL: 'mongodb+srv://Raf_Levi:Raf_Levi123@cluster0.rkdpf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+//   dbURL: 'mongodb+srv://Raf_Levi:Raf_Levi123@cluster0.rkdpf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1',
 //  dbName: 'AirLevi_db',
 //  "isGuestMode":true
 // }
-
 module.exports = {
-  dbURL: 'mongodb://localhost:27017',
-  dbName: 'AirLevi_db'
+  dbURL: 'mongodb+srv://Raf_Levi:Raf_Levi123@cluster0.rkdpf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+ dbName: 'AirLevi_db',
+ "isGuestMode":true
 }
-const testConnection = async () => {
-  try {
-    const collection = await dbService.getCollection('AirLevi')
-    console.log('MongoDB connection is successful')
-  } catch (err) {
-    console.error('MongoDB connection error:', err)
-  }
-}
-testConnection()
+
+// module.exports = {
+//   dbURL: 'mongodb://localhost:27017',
+//   dbName: 'AirLevi_db'
+// }
+// const testConnection = async () => {
+//   try {
+//     const collection = await dbService.getCollection('AirLevi')
+//     console.log('MongoDB connection is successful')
+//   } catch (err) {
+//     console.error('MongoDB connection error:', err)
+//   }
+// }
+// testConnection()
 
 // module.exports = {
 // dbURL: 'mongodb+srv://Raf_Levi:Raf_Levi123@cluster0.rkdpf.mongodb.net/AirLevi_db?retryWrites=true&w=majority',
