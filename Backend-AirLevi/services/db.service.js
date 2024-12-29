@@ -2,15 +2,16 @@ const MongoClient = require('mongodb').MongoClient
 const config = require('../config')
 const logger = require('./logger.service')
 
-// module.exports = {
-//     getCollection
-// }
-
-const dbService = {
+module.exports = {
     getCollection
 }
 
-module.exports = dbService
+const dbService = {
+    getCollection,
+    connect
+}
+
+// module.exports = dbService
 
 
 var dbConn = null
@@ -37,7 +38,7 @@ async function connect() {
         console.log('config.name',config.dbName)
         // console.log('clintee',client)
         
-        //dbConn = db
+        dbConn = db
         console.log('Connected to the database')
         return db
     } catch (err) {
