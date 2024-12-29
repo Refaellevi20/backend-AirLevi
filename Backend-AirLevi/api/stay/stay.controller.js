@@ -5,18 +5,24 @@ const userService = require('../user/user.service.js');
 const logger = require('../../services/logger.service');
 
 async function getStays(req, res) {
-    const filterBy = req.query
-    console.log('filterBy',filterBy)
-    
+    // const filterBy = req.query
+    // console.log('filterBy',filterBy)
+
     try {
-        // logger.debug('Getting Stays')
-        // console.log('filterBy', filterBy)
-        const stays = await stayService.query(filterBy)
-        res.json(stays)
-    } catch (err) {
-        logger.error('Failed to get stays', err)
-        res.status(500).send({ err: 'Failed to get stays' })
-    }
+        const { location = '' } = req.query
+
+        const filterBy = {
+            location: location || '',
+}
+
+        logger.debug('Getting Stays')
+    console.log('filterBy', filterBy)
+    const stays = await stayService.query(filterBy)
+    res.json(stays)
+} catch (err) {
+    logger.error('Failed to get stays', err)
+    res.status(500).send({ err: 'Failed to get stays' })
+}
     }
 
 async function getStayById(req, res) {
@@ -31,7 +37,7 @@ async function getStayById(req, res) {
 }
 
 async function addStay(req, res) {
-    const {loggedinUser} = req
+    const { loggedinUser } = req
 
     try {
         const stay = req.body
@@ -61,7 +67,7 @@ async function removeStay(req, res) {
     try {
         const stayId = req.params.id
         const userId = req.loggedinUser._id // Get logged in user from request
-       
+
         const stay = await stayService.getById(stayId)
         if (!stay) {
             return res.status(404).send('Stay not found')
@@ -81,7 +87,7 @@ async function removeStay(req, res) {
 }
 
 async function addStayReview(req, res) {
-    const {loggedinUser} = req
+    const { loggedinUser } = req
     try {
         const stayId = req.body.id
         const review = {
@@ -89,7 +95,7 @@ async function addStayReview(req, res) {
             rate: req.body.review.rate,
             by: loggedinUser
         }
-       const addedReview = await stayService.addStayReview(stayId, review)
+        const addedReview = await stayService.addStayReview(stayId, review)
         res.json(addedReview)
     } catch (err) {
         logger.error('Failed to add stay review', err)
@@ -100,7 +106,7 @@ async function addStayReview(req, res) {
 async function removeStayReview(req, res) {
     try {
         const stayId = req.body.id
-        const {reviewId} = req.params
+        const { reviewId } = req.params
         const removedReviewId = await stayService.removeStayReview(stayId, reviewId)
         res.send(removedReviewId)
     } catch (err) {

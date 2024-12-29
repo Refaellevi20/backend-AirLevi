@@ -1,8 +1,22 @@
+// module.exports = {
+//   dbURL: 'mongodb+srv://Raf_Levi:Raf_levi123@cluster0.rkdpf.mongodb.net/AirLevi_db?retryWrites=true&w=majority',
+//   dbName: 'AirLevi_db',
+//   "isGuestMode":true
+// }
+
 module.exports = {
-  dbURL: 'mongodb+srv://Raf_Levi:Raf_levi123@cluster0.rkdpf.mongodb.net/AirLevi_db?retryWrites=true&w=majority',
-  dbName: 'AirLevi_db',
-  "isGuestMode":true
+  dbURL: 'mongodb://localhost:27017',
+  dbName: 'AirLevi_db'
 }
+const testConnection = async () => {
+  try {
+    const collection = await dbService.getCollection('AirLevi')
+    console.log('MongoDB connection is successful')
+  } catch (err) {
+    console.error('MongoDB connection error:', err)
+  }
+}
+testConnection()
 
 
 // require('dotenv').config();
