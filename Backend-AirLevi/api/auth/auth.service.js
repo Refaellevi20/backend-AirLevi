@@ -22,12 +22,12 @@ async function login(username, password) {
 
     delete user.password
     user._id = user._id.toString()
-    user.imgUrl= user.imgUrl || "https://robohash.org/vitaequovelit.png?size=50x50&set=set1"
+    user.imgUrl= user.imgUrl || "https://robohash.org/vitaequovelit.png?size=50x50&set=set4"
     return user
 }
    
 
-async function signup({username, password, fullname, imgUrl= "https://robohash.org/vitaequovelit.png?size=50x50&set=set1"}) {
+async function signup({username, password, fullname, imgUrl= "https://robohash.org/vitaequovelit.png?size=50x50&set=set4"}) {
     const saltRounds = 10
 
     logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
