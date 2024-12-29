@@ -142,6 +142,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const dbService = require('./services/db.service')
 const logger = require('./services/logger.service')
+require('dotenv').config()
+
 
 const app = express()
 const http = require('http').createServer(app)
@@ -168,6 +170,9 @@ const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const orderRoutes = require('./api/order/order.routes')
 const stayRoutes = require('./api/stay/stay.routes')
+
+const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
+app.all('*', setupAsyncLocalStorage)
 const { setupSocketAPI } = require('./services/socket.service')
 
 app.use('/api/auth', authRoutes)
