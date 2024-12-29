@@ -18,7 +18,6 @@ const testConnection = async () => {
 }
 testConnection()
 
-
 // require('dotenv').config();
 
 // const config = {
