@@ -12,7 +12,6 @@ function requireAuth(req, res, next) {
   }
   if (!loggedinUser) return res.status(401).send('Not Authenticated')
   req.loggedinUser=loggedinUser
-  //IS THIS RIGHT???
   next()
 }
 
@@ -26,7 +25,6 @@ function requireAdmin(req, res, next) {
   }
   next()
 }
-
 
 // module.exports = requireAuth
 

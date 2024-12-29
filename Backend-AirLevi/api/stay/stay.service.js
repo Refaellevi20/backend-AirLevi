@@ -47,9 +47,8 @@ async function getById(stayId) {
 
 async function remove(stayId) {
     try {
-        const collection = await dbService.getCollection('AirLevi')
-        await collection.deleteOne({ _id: ObjectId(stayId) })
-        return stayId
+        const collection = await dbService.getCollection('stay')
+        await collection.deleteOne({ _id:new ObjectId(stayId) })
     } catch (err) {
         logger.error(`cannot remove stay ${stayId}`, err)
         throw err

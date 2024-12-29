@@ -144,7 +144,6 @@ const dbService = require('./services/db.service')
 const logger = require('./services/logger.service')
 require('dotenv').config()
 
-
 const app = express()
 const http = require('http').createServer(app)
 
@@ -157,7 +156,7 @@ if (process.env.NODE_ENV === 'production') {
     // Express serve static files on production environment
     app.use(express.static(path.resolve(__dirname, 'public')))
 } else {
-    // Configuring CORS for development
+    // Configuring CORS for developmentss
     const corsOptions = {
         origin: ['http://127.0.0.1:5173', 'http://localhost:5173'],
         credentials: true
@@ -166,6 +165,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Routes
+const groupRoutes = require('./api/group/group.routes')
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const orderRoutes = require('./api/order/order.routes')
@@ -175,6 +175,7 @@ const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
 app.all('*', setupAsyncLocalStorage)
 const { setupSocketAPI } = require('./services/socket.service')
 
+app.use('/api/group', groupRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/order', orderRoutes)

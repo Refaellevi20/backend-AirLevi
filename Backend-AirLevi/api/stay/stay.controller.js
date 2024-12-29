@@ -60,8 +60,20 @@ async function updateStay(req, res) {
 async function removeStay(req, res) {
     try {
         const stayId = req.params.id
-        const removedId = await stayService.remove(stayId)
-        res.json(removedId)
+        const userId = req.loggedinUser._id // Get logged in user from request
+       
+        const stay = await stayService.getById(stayId)
+        if (!stay) {
+            return res.status(404).send('Stay not found')
+        }
+
+        if (!req.loggedinUser.isOwner && stay.host._id !== userId) {
+            return res.status(403).send('Not authorized to delete this stay')
+        }
+
+        await stayService.remove(stayId)
+        res.send({ msg: 'Deleted successfully' })
+
     } catch (err) {
         logger.error('Failed to remove stay', err)
         res.status(500).send({ err: 'Failed to remove stay' })
