@@ -47,9 +47,38 @@ async function updateUser(req, res) {
     }
 }
 
+async function getAllUserCounts(req, res) {
+    try {
+        const users = await userService.query()
+        const userCounts = users.map(user => ({
+            _id: user._id,
+            fullname: user.fullname,
+            count: user.count
+        }))
+        res.send(userCounts)
+    } catch (err) {
+        logger.error('Failed to get user counts', err)
+        res.status(500).send({ err: 'Failed to get user counts' })
+    }
+}
+
+
+async function updateUserCount(req, res) {
+    try {
+        const userId = req.params.id
+        const user = await userService.updateUserCount(userId)
+        res.send(user)
+    } catch (err) {
+        logger.error('Failed to update user count', err);
+        res.status(500).send({ err: 'Failed to update user count' })
+    }
+}
+
 module.exports = {
     getUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    updateUserCount,
+    getAllUserCounts,
 }

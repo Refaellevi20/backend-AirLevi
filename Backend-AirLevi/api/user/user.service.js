@@ -9,7 +9,8 @@ module.exports = {
     getByUsername,
     remove,
     update,
-    add
+    add,
+    updateUserCount
 }
 
 async function query(filterBy = {}) {
@@ -35,7 +36,7 @@ async function query(filterBy = {}) {
 async function getById(userId) {
     try {
         const collection = await dbService.getCollection('user')
-        const user = await collection.findOne({ _id:new ObjectId(userId) })
+        const user = await collection.findOne({ _id: new ObjectId(userId) })
         delete user.password
 
         return user
@@ -58,7 +59,7 @@ async function getByUsername(username) {
 async function remove(userId) {
     try {
         const collection = await dbService.getCollection('user')
-        await collection.deleteOne({ _id:new ObjectId(userId) })
+        await collection.deleteOne({ _id: new ObjectId(userId) })
     } catch (err) {
         logger.error(`cannot remove user ${userId}`, err)
         throw err
@@ -69,12 +70,13 @@ async function update(user) {
     try {
         // peek only updatable properties
         const userToSave = {
-            _id:new ObjectId(user._id), // needed for the returnd obj
+            _id: new ObjectId(user._id), // needed for the returnd obj
             fullname: user.fullname,
             username: user.username,
             password: user.password,
             fullname: user.fullname,
             imgUrl: user.imgUrl,
+            count:user.count
         }
         if (user.isOwner) userToSave.isOwner = user.isOwner
         const collection = await dbService.getCollection('user')
@@ -82,6 +84,23 @@ async function update(user) {
         return userToSave
     } catch (err) {
         logger.error(`cannot update user ${user._id}`, err)
+        throw err
+    }
+}
+
+async function updateUserCount(userId) {
+    try {
+        const collection = await dbService.getCollection('user');
+        const user = await collection.findOne({ _id: new ObjectId(userId) })
+        if (!user) {
+            throw new Error('User not found')
+        }
+        user.count = Number(user.count) || 0
+        user.count += 1
+        await collection.updateOne({ _id: new ObjectId(userId) }, { $set: { count: user.count } })
+        return user
+    } catch (err) {
+        logger.error(`Failed to update user count for user ${userId}`, err)
         throw err
     }
 }
@@ -95,6 +114,7 @@ async function add(user) {
             fullname: user.fullname,
             imgUrl: user.imgUrl,
             isOwner: user.isOwner,
+            count: 0
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)

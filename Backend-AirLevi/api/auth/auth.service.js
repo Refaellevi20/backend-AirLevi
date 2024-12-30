@@ -21,13 +21,14 @@ async function login(username, password) {
     // if (!match) return Promise.reject('Invalid username or password')
 
     delete user.password
+
     user._id = user._id.toString()
     user.imgUrl= user.imgUrl || "https://robohash.org/vitaequovelit.png?size=50x50&set=set4"
     return user
 }
    
 
-async function signup({username, password, fullname, imgUrl= "https://robohash.org/vitaequovelit.png?size=50x50&set=set4"}) {
+async function signup({username, password, fullname, imgUrl= "https://robohash.org/vitaequovelit.png?size=50x50&set=set4",count}) {
     const saltRounds = 10
 
     logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
@@ -42,7 +43,7 @@ async function signup({username, password, fullname, imgUrl= "https://robohash.o
 
 
 function getLoginToken(user) {
-    const userInfo = {_id : user._id, fullname: user.fullname, imgUrl:user.imgUrl, isOwner: user.isOwner, isAdmin: user.isAdmin}
+    const userInfo = {_id : user._id, fullname: user.fullname, imgUrl:user.imgUrl, isOwner: user.isOwner, isAdmin: user.isAdmin,count:user.count}
     return cryptr.encrypt(JSON.stringify(userInfo))    
 }
 
