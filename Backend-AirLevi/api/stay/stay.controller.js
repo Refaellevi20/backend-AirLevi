@@ -66,7 +66,7 @@ async function updateStay(req, res) {
 async function removeStay(req, res) {
     try {
         const stayId = req.params.id
-        const userId = req.loggedinUser._id // Get logged in user from request
+        const userId = req.loggedinUser._id 
 
         const stay = await stayService.getById(stayId)
         if (!stay) {

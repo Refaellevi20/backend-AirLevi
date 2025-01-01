@@ -66,18 +66,8 @@ async function add(stay) {
     }
 }
 
-async function update(stay) {
-    try {
-        const savedStay = await stayService.save(stay)
-        console.log('Updated stay action store:', savedStay)
-        store.dispatch(getActionUpdateStay(savedStay))
-        return savedStay
-      } catch (err) {
-        console.log('Error while updating stay', err)
-        logger.error(`Error while updating stay ${stay._id}:`, err)
-        throw new Error(`Cannot save stay: ${err.message}`)
-      }
-    }
+// re
+
 // async function update(stay) {
 //     try {
 //         const stayToSave = {
@@ -93,6 +83,18 @@ async function update(stay) {
 //         throw err
 //     }
 // }
+
+async function update(stay) {
+    try {
+        const collection = await dbService.getCollection('AirLevi')
+        const { _id, ...stayToUpdate } = stay
+        await collection.updateOne({ _id:new ObjectId(_id) }, { $set: stayToUpdate })
+        return stay
+    } catch (err) {
+        logger.error(`cannot update stay ${stay._id}`, err)
+        throw err
+    }
+}
 
 async function addStayReview(stayId, review) {
     try {
