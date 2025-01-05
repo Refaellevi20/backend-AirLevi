@@ -133,11 +133,7 @@ Clone the repository.
 
 git clone https://github.com/Refaellevi20/AirLevi.git
 
-cd Frontend-AirLevi
-
-cd vite-project
-
-npm i / npm i --force
+npm i 
 
 npm run dev
 
