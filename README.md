@@ -1,5 +1,8 @@
 link to the project https://backend-airlevi-7.onrender.com/
 
+![Screenshot 2025-01-05 063831](https://github.com/user-attachments/assets/f5ca257a-caaf-47d5-902c-571f9d41dc6d)
+
+
 AirLevi
 
 AirLevi is a comprehensive airline management system built using JavaScript. The project simulates the essential operations of an airline, including managing planes, flights, and passengers. This project demonstrates the use of object-oriented programming principles and user interaction with data structures.
@@ -157,4 +160,5 @@ If you wish to contribute, feel free to fork the repository and submit a pull re
 
 Contact
 
-For any questions or feedback, feel free to reach out to Your Name at your.email@example.com.
+For any questions or feedback, feel free to reach out to Your Name at refael14levi@gmail.com
+
