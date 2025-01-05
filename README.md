@@ -125,6 +125,11 @@ Clone the repository.
 
 git clone https://github.com/YourUsername/AirLevi.git
 
+cd Frontend-AirLevi
+cd vite-project
+npm i / npm i --force
+npm run dev
+
 Open the project in your code editor.
 
 Run the project in a browser or a JavaScript runtime environment like Node.js.
