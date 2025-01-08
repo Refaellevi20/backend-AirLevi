@@ -1,6 +1,5 @@
 link to the project https://backend-airlevi-7.onrender.com/
 
-![Screenshot 2025-01-05 063745](https://github.com/user-attachments/assets/c7a9c24b-fc91-417c-adf4-71c0655aeddc)
 ![Screenshot 2025-01-05 063730](https://github.com/user-attachments/assets/fd426ec1-30ae-4106-955a-5d2ad4ae0490)
 ![Screenshot 2025-01-05 063702](https://github.com/user-attachments/assets/fdf212b9-bad3-4fd0-97f0-7ba318c05384)
 ![Screenshot 2025-01-05 063419](https://github.com/user-attachments/assets/7ec034c3-ae5b-4a9b-b356-0801b00b09f8)
