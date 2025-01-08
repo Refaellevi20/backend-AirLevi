@@ -501,13 +501,13 @@
     "_id": "622f337a75c7d36e498aaafa",
     "name": "M&M Space MM2  Apartamento no centro da cidade",
     "type": "Entire home/apt",
-    "imgUrls": [
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436861/xrxhgsif3ekhxgn8irlm.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663437017/gjyzgdjngyrhfrj2loxz.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436556/mb70fifvvpvde8jub5cg.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663437241/wt0seud4ot4cmdrztdzz.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663437308/p80ndulkcghpcfsnvjdo.jpg"
-    ],
+   "imgUrls": [
+	"https://a0.muscache.com/im/pictures/28af0024-812b-4fb0-8ad0-90e1ae26ecd6.jpg?im_w=720&im_format=avif",
+    "https://a0.muscache.com/im/pictures/ae2592e2-860f-4b76-806d-c9425be21297.jpg?im_w=720&im_format=avif",
+    "https://a0.muscache.com/im/pictures/9d0f0a8d-a725-4bf5-97d5-9a05c7774b36.jpg?im_w=720&im_format=avif",
+    "https://a0.muscache.com/im/pictures/925ddc57-c9d4-4022-ada1-903681bd3120.jpg?im_w=720&im_format=avif",
+  "https://a0.muscache.com/im/pictures/75bb4e2a-e0fd-4511-b950-d12def236952.jpg?im_w=720&im_format=avif"
+],
     "price": 65,
     "details": {
       "guests": 6,
@@ -2377,12 +2377,11 @@
     "name": "Heroísmo IV",
     "type": "Entire home/apt",
     "imgUrls": [
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436823/af6elioxovkhvp6cg1un.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663437327/epcnh2tzpafwmvi3srcp.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663437310/tus71yfpnvgulenrli6a.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436453/ndl8odasqgnyquvsbalp.jpg",
-      "http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436821/b4ejulqdhsvyseyfnfr0.jpg"
-    ],
+      "https://a0.muscache.com/im/pictures/01b0a7c6-b3e2-41a1-87c2-6aed3a9ba31d.jpg?im_w=480&im_format=avif",
+        "https://a0.muscache.com/im/pictures/1683e18e-fa28-4a4a-aa46-ff9ff52ff319.jpg?im_w=480&im_format=avif",
+        "https://a0.muscache.com/im/pictures/e45b923d-64a1-4a93-b446-db4d47f0491c.jpg?im_w=480&im_format=avif",
+        "https://a0.muscache.com/im/pictures/47db792d-dc80-4f55-aadf-8473d2ee79ff.jpg?im_w=960&im_format=avif"
+      ],
     "price": 29,
     "details": {
       "guests": "6",
